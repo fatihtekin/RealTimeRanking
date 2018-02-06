@@ -46,6 +46,7 @@ public class TopKRankingService {
     public void submitRelativeScore(final long userId, final long score){
         validateIfPositive(userId, "UserId");
         User user = new User(userId,score);
+        //TODO use putifpresent for threadsafety
         User toUpsertUser = Optional.ofNullable(idToUserSortedMap.get(user)).flatMap(u -> {
             User updateUser = new User(userId, u.getRank()+score);
             return Optional.of(updateUser);
